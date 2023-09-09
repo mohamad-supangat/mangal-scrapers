@@ -10,7 +10,7 @@ colored = true
 
 [downloader]
 async = true
-chapter_name_template = '[{padded-index}] {chapter}'
+chapter_name_template = '{index} {chapter}'
 create_manga_dir = true
 create_volume_dir = false
 default_sources = []
@@ -21,7 +21,7 @@ redownload_existing = false
 stop_on_error = false
 
 [formats]
-skip_unsupported_images = true
+skip_unsupported_images = false
 use = 'cbz'
 
 [gen]
@@ -74,7 +74,7 @@ show_query_suggestions = true
 
 [tui]
 item_spacing = 1
-read_on_enter = true
+read_on_enter = false
 reverse_chapters = false
 search_prompt = '> '
 show_downloaded_path = true
