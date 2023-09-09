@@ -109,4 +109,4 @@ end
 --
 -- print(inspect(SearchManga('madam')))
 -- print(inspect(MangaChapters('https://92.87.6.124/manga/madam/')))
-print(inspect(ChapterPages("https://92.87.6.124/madam-chapter-71/")))
+-- print(inspect(ChapterPages("https://92.87.6.124/madam-chapter-71/")))
