@@ -55,7 +55,7 @@ function MangaChapters(mangaURL)
 
     local chapters = {}
 
-    for i, v in ipairs(Page:elements("#chapter_list a")) do
+    for i, v in ipairs(Page:elements("#chapterlist .eph-num a")) do
         local elem = Html.parse(v:html())
         local url = v:attribute("href")
         local chapter = { url = url, name = elem:find("span.chapternum"):text() }
@@ -109,5 +109,5 @@ end
 --
 --
 -- print(inspect(SearchManga('necro')))
-print(inspect(MangaChapters("https://komikindo.co/komik/records-of-the-swordsman-scholar/")))
+print(inspect(MangaChapters("https://komikindo.co/manga/records-of-the-swordsman-scholar/")))
 -- print(inspect(ChapterPages("https://shinigami.ae/series/disastrous-necromancer/chapter-01/")))
