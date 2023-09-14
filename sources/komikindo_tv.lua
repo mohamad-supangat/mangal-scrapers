@@ -1,5 +1,5 @@
 --------------------------------
--- @name    komikindo
+-- @name    komikindo_tw
 -- @url     https://komikindo.tv
 -- @author  deve
 -- @license MIT
