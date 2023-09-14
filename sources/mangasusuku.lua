@@ -20,7 +20,7 @@ local inspect = require("inspect")
 Browser = Headless.browser()
 Page = Browser:page()
 Base = "https://mangasusuku.xyz"
-Delay = 1 -- seconds
+Delay = 3 -- seconds
 --- END VARIABLES ---
 
 

@@ -1,6 +1,6 @@
 --------------------------------
--- @name    shinigami
--- @url     https://shinigami.ae
+-- @name    komikindo
+-- @url     https://komikindo.tv
 -- @author  deve
 -- @license MIT
 --------------------------------
@@ -19,7 +19,7 @@ local inspect = require("inspect")
 ----- VARIABLES -----
 Browser = Headless.browser()
 Page = Browser:page()
-Base = "https://shinigami.ae"
+Base = "https://komikindo.tv"
 Delay = 3 -- seconds
 --- END VARIABLES ---
 
@@ -31,14 +31,15 @@ Delay = 3 -- seconds
 -- @param query string Query to search for
 -- @return manga[] Table of mangas
 function SearchManga(query)
-    local url = Base .. "/?post_type=wp-manga&s=" .. query
+    local url = Base .. "/?s=" .. query
     Page:navigate(url)
     Time.sleep(Delay)
 
     local mangas = {}
 
-    for i, v in ipairs(Page:elements(".post-title a")) do
-        local manga = { url = v:attribute('href'), name = v:text() }
+    for i, v in ipairs(Page:elements(".film-list .bigors a")) do
+        local elem = Html.parse(v:html())
+        local manga = { url = v:attribute('href'), name = elem:find("h4"):text() }
         mangas[i] = manga
     end
 
@@ -54,10 +55,10 @@ function MangaChapters(mangaURL)
 
     local chapters = {}
 
-    for i, v in ipairs(Page:elements(".chapter-link a")) do
+    for i, v in ipairs(Page:elements("#chapter_list .lchx a")) do
         local elem = Html.parse(v:html())
         local url = v:attribute("href")
-        local chapter = { url = url, name = elem:find(".chapter-manhwa-title"):text() }
+        local chapter = { url = url, name = v:text() }
         chapters[i] = chapter
     end
 
@@ -75,14 +76,15 @@ function ChapterPages(chapterURL)
     -- print(Page:has(".page-break > img"))
 
     local pages = {}
-    for i, v in ipairs(Page:elements(".page-break > img")) do
-        local url = RemoveTabs(v:attribute("data-src"))
+    for i, v in ipairs(Page:elements("#chimg-auh > img")) do
+        local url = RemoveTabs(v:attribute("src"))
         local p = { index = i, url = url }
         pages[i] = p
     end
 
     return pages
 end
+
 --- END MAIN ---
 
 
@@ -100,11 +102,12 @@ function ReverseList(list)
     end
     return reversed_list
 end
+
 --- END HELPERS ---
 
 -- ex: ts=4 sw=4 et filetype=lua
 --
 --
 -- print(inspect(SearchManga('necro')))
--- print(inspect(MangaChapters('https://shinigami.ae/series/disastrous-necromancer/')))
+print(inspect(MangaChapters("https://komikindo.tv/komik/records-of-the-swordsman-scholar/")))
 -- print(inspect(ChapterPages("https://shinigami.ae/series/disastrous-necromancer/chapter-01/")))
