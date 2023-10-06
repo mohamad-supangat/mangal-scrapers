@@ -71,7 +71,7 @@ function ChapterPages(chapterURL)
     Time.sleep(Delay)
 
 
-    print(Page:has("#Baca_Komik img"))
+    -- print(Page:has("#Baca_Komik img"))
     -- print(inspect(Page:elements("#Baca_Komik img")))
 
     local pages = {}
@@ -109,4 +109,4 @@ end
 --
 -- print(inspect(SearchManga('villain')))
 -- print(inspect(MangaChapters('https://komiku.id/manga/the-villain-of-destiny/')))
-print(inspect(ChapterPages("https://komiku.id/ch/the-villain-of-destiny-chapter-105/")))
+-- print(inspect(ChapterPages("https://komiku.id/ch/the-villain-of-destiny-chapter-105/")))
