@@ -1,6 +1,6 @@
 --------------------------------
--- @name    shinigami
--- @url     https://shinigami.sh
+-- @name    komikast
+-- @url     https://komikcast.vip
 -- @author  deve
 -- @license MIT
 --------------------------------
@@ -19,8 +19,8 @@ local inspect = require("inspect")
 ----- VARIABLES -----
 Browser = Headless.browser()
 Page = Browser:page()
-Base = "https://shinigami.sh"
-Delay = 3 -- seconds
+Base = "https://komikcast.vip"
+Delay = 1 -- seconds
 --- END VARIABLES ---
 
 
@@ -31,14 +31,17 @@ Delay = 3 -- seconds
 -- @param query string Query to search for
 -- @return manga[] Table of mangas
 function SearchManga(query)
-    local url = Base .. "/?post_type=wp-manga&s=" .. query
+    local url = Base .. "/?s=" .. query
     Page:navigate(url)
     Time.sleep(Delay)
 
     local mangas = {}
-
-    for i, v in ipairs(Page:elements(".post-title a")) do
-        local manga = { url = v:attribute('href'), name = v:text() }
+    --
+    -- print(inspect(Page:html(".list-update_items-wrapper")));
+    --
+    for i, v in ipairs(Page:elements(".list-update_items-wrapper a")) do
+        local elem = Html.parse(v:html())
+        local manga = { url = v:attribute('href'), name = elem:find("h3.title"):text() }
         mangas[i] = manga
     end
 
@@ -52,16 +55,19 @@ function MangaChapters(mangaURL)
     Page:navigate(mangaURL)
     Time.sleep(Delay)
 
+    -- print(Page:has("#chapter-wrapper a.chapter-link-item"));
     local chapters = {}
 
-    for i, v in ipairs(Page:elements(".chapter-link a")) do
-        local elem = Html.parse(v:html())
+    for i, v in ipairs(Page:elements("a.chapter-link-item")) do
+        print(i)
+        -- print(v:attribute('href'))
+        -- local elem = Html.parse(v:html())
         local url = v:attribute("href")
-        local chapter = { url = url, name = elem:find(".chapter-manhwa-title"):text() }
+        local chapter = { url = url, name = v:text() }
         chapters[i] = chapter
     end
 
-    return ReverseList(chapters)
+    return chapters
 end
 
 --- Gets the list of all pages of a chapter.
@@ -83,6 +89,7 @@ function ChapterPages(chapterURL)
 
     return pages
 end
+
 --- END MAIN ---
 
 
@@ -100,11 +107,12 @@ function ReverseList(list)
     end
     return reversed_list
 end
+
 --- END HELPERS ---
 
 -- ex: ts=4 sw=4 et filetype=lua
 --
 --
--- print(inspect(SearchManga('necro')))
--- print(inspect(MangaChapters('https://shinigami.ae/series/disastrous-necromancer/')))
--- print(inspect(ChapterPages("https://shinigami.ae/series/disastrous-necromancer/chapter-01/")))
+-- print(inspect(SearchManga('gosu')))
+-- print(inspect(MangaChapters('https://komikcast.vip/komik/gosu/')))
+-- print(inspect(ChapterPages("https://komikast.ae/series/disastrous-necromancer/chapter-01/")))

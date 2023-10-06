@@ -109,5 +109,5 @@ end
 --
 --
 -- print(inspect(SearchManga('necro')))
-print(inspect(MangaChapters("https://komikindo.co/manga/records-of-the-swordsman-scholar/")))
+-- print(inspect(MangaChapters("https://komikindo.co/manga/records-of-the-swordsman-scholar/")))
 -- print(inspect(ChapterPages("https://shinigami.ae/series/disastrous-necromancer/chapter-01/")))
