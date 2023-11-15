@@ -13,15 +13,15 @@ async = true
 chapter_name_template = '{index} {chapter}'
 create_manga_dir = true
 create_volume_dir = false
-default_sources = []
+default_sources = ['komikuid']
 download_cover = true
 path = '.'
 read_downloaded = true
 redownload_existing = false
-stop_on_error = false
+stop_on_error = true
 
 [formats]
-skip_unsupported_images = false
+skip_unsupported_images = true
 use = 'cbz'
 
 [gen]
